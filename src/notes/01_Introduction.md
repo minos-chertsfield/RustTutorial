@@ -34,7 +34,55 @@ Rust 提供了一系列功能来帮助你管理和组织你的代码<br>
 该系统由`crate`、`module`和`path`以及用于处理这些项目的工具组成
 
 - **Crates**:
+Rust `crate` 是一个**编译单元**，这是 **Rust 编译器可以运行的最小代码**段<br>
+将 `crate` 中的代码编译在一起以创建**二进制可执行文件**或**库**<br>
+在 Rust 中，只有 `crate` 被编译为可重用的单元，一个 `crate` 包含一个 Rust 模块的层次结构，以及一个隐式的、未命名的顶级模块
 - **Modules**:
+Rust `module`通过允许您管理`crate`内各个代码项的范围来帮助您组织程序<br>
+相关代码项或一起使用的项可以分组到同一`module`中，递归代码定义可以跨越其他`module`
 - **Paths**:
+在 Rust 中，您可以使用`path`来命名代码中的项，例如，`path`可以是数据定义（如向量）、代码函数，甚至是`module`<br>
+`module`功能还可以帮助您**控制路径的隐私**，您可以指定代码中可公开访问的部分和私有部分，此功能允许您**隐藏具体的实现细节**
 
-### 2.1. 使用Rust的`crate`和`library`
+## 3. 使用Rust的`crate`和`library`
+Rust 标准库 `std` 包含用于 Rust 程序中**基本定义和操作**的可重用代码<br>
+该库包含**核心数据类型**（如 `String` 和 `Vec<T>`）的定义、Rust 基本类型的操作、常用宏函数的代码、对输入和输出操作的支持以及许多其他功能领域
+
+Rust 程序中有数以万计的库和第三方 `crate` 可供使用，其中大部分可以通过 Rust 的第三方 `crate` 存储库 [crates.io](https://crates.io/) 访问
+
+以下为常用的`crate`:
+- std：Rust的标准库
+  - `std::collections` - 集合类型的定义，如：`HashMap`
+  - `std::env` - 与环境相关的函数
+  - `std::fmt` - 输入输出格式控制相关的函数
+  - `std::fs` - 文件系统相关函数
+  - `std::io` - I/O相关的函数和定义
+  - `std::path` - 文件系统路径相关的函数和定义
+- [structopt](https://crates.io/crates/structopt) - 简化命令行参数解析的三方库
+- [chrono](https://crates.io/crates/chrono) - 处理日期和时间数据的三方库
+- [regex](https://crates.io/crates/regex) - 处理正则表达式的三方库
+- [serde](https://crates.io/crates/serde) - 对于Rust的数据结构执行序列化、反序列化的三方库
+
+默认情况下，`std` 库可以被所有`crate`引用<br>
+为了访问 `crate` 或库中的可重用代码，我们实现了 `use` 关键字，
+使用 `use` 关键字，`crate` 或库中的代码被“**带入作用域**”，以便您可以访问程序中的定义和函数<br>
+标准库在 `use` 语句中使用路径 `std` 进行访问， 比如`use std：：fmt` ，
+其他 `crate` 或库使用其名称进行访问，例如 `use regex：：Regex`
+
+## 4. 使用Cargo创建、管理项目
+虽然可以使用**Rust编译器**（`rustc`）直接构建`crate`，但是大多数项目使用**Rust构建工具**以及**依赖管理器**——`Cargo`
+Cargo 可以为您做很多事情，包括：
+- 使用 `cargo new` 命令创建新的项目模板
+- 使用 `cargo build` 命令构建项目
+- 使用 `cargo run` 命令生成并运行项目
+- 使用 `cargo test` 命令测试项目
+- 使用 `cargo check` 命令检查项目类型
+- 使用 `cargo doc` 命令为项目构建文档
+- 使用 `cargo publish` 命令将库发布到 [crates.io](https://crates.io/)
+- 通过将 `crate` 名称添加到 `Cargo.toml` 文件，将依赖 `crate` 添加到项目中
+
+## 5. 何时使用Rust
+在为您的项目选择最佳语言时，Rust 语言有许多优势需要考虑：
+- Rust 允许控制用与 C 和 C++ 相当的语言编写的程序和库的性能和资源消耗，同时**默认情况下仍然是内存安全的**。这种级别的控制消除了整个类别的常见错误
+- Rust 具有**丰富的抽象功能**，允许开发人员将程序的许多不变量编码为代码。然后，编译器检查代码，而不是依赖约定或文档。此功能通常会导致“如果它编译，它就可以工作”的感觉
+- Rust **具有用于构建、测试、记录和共享代码的内置工具**，以及丰富的第三方工具和库生态系统。这些工具可以使一些在某些语言中很困难的任务，例如构建依赖项，在 Rust 中变得简单而高效
